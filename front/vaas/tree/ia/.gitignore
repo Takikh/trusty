@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment variables
+.env
+.env.local
+
+# Runtime artifacts
+runtime/
+db/
+.deepface/
+
+# Large model files
+*.onnx
+*.bin
+*.h5
+*.pb
+*.pt
+*.pth
+
+# Data and outputs
+data/uploads/
+data/images/
+transcripts/
+reports/
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,29 @@
+{
+  "doctor_id": "good_001",
+  "declared_name": "Dr. Ahmed Benali",
+  "declared_specialty": "Cardiology",
+  "declared_institution": "Université d'Alger — Faculté de Médecine",
+  "declared_employer": "CHU Mustapha Pacha",
+  "years_experience": 6,
+  "document_paths": [
+    "demo/good_doctor/documents/diploma.pdf",
+    "demo/good_doctor/documents/license.pdf"
+  ],
+  "survey_qa": [
+    {
+      "id": "sq1",
+      "question": "Describe your main area of expertise within Cardiology and what you focus on most in your daily practice.",
+      "answer": "My primary focus is interventional cardiology, specifically percutaneous coronary interventions (PCI) including coronary stenting and balloon angioplasty. On a daily basis, I manage acute coronary syndrome patients in the cath lab. I perform approximately 15 to 20 procedures per month and am particularly experienced in complex bifurcation lesions and chronic total occlusions. I also follow outpatients with heart failure and arrhythmias in the clinic."
+    },
+    {
+      "id": "sq2",
+      "question": "During your time at CHU Mustapha Pacha, what was a challenging case that shaped your approach to patient care?",
+      "answer": "I recall a 58-year-old male who presented with an inferior STEMI. The initial angiogram showed a right coronary artery occlusion with heavy thrombus burden. We decided to do manual thrombus aspiration before stenting. Mid-procedure the patient went into cardiogenic shock and required intra-aortic balloon pump support. We stabilized him, completed the PCI successfully, and he was discharged after 8 days with an ejection fraction that had recovered to 45%. That case reinforced for me the importance of having a full contingency plan before entering the cath lab."
+    },
+    {
+      "id": "sq3",
+      "question": "How would you describe your clinical methodology when a patient presents with a complex cardiac condition?",
+      "answer": "I begin with immediate hemodynamic stabilization — airway, breathing, circulation, and IV access. Then I take a focused history and perform a physical examination to identify the most likely etiology. I rely heavily on the ECG and point-of-care echo in the acute setting. I involve the multidisciplinary team early, especially cardiac surgery for potential high-risk PCI or valve surgery cases. My philosophy is to always have a backup plan and never proceed with a high-risk intervention without adequate preparation and the right team in place."
+    }
+  ]
+}

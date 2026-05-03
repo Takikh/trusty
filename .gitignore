@@ -1,0 +1,49 @@
+# Node modules
+**/node_modules/
+node_modules/
+
+# Python virtual environments
+.venv/
+.venv*/
+venv/
+env/
+**/venv/
+**/env/
+**/.venv/
+**/.venv*/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Build artifacts
+dist/
+build/
+
+# IDE and OS
+.DS_Store
+.idea/
+.vscode/
+
+# Project specific data folders
+data/
+db/
+audio/
+transcripts/
+reports/
+
+# Environment variables
+.env
+**/.env
+.env.*
+
+# Databases
+*.sqlite3
+*.db
+*.rar
+*.zip
+*.h5
+*.onnx
+*.bin

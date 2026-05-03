@@ -1,0 +1,850 @@
+/* ====================================================================
+   SecureID Verification — Enterprise Security Portal Design System
+   Deep blue enterprise aesthetic with glassmorphism & micro-animations
+   ==================================================================== */
+
+:root {
+  --vaas-bg-start: #060c1f;
+  --vaas-bg-end: #0a1628;
+  --vaas-surface: rgba(15, 25, 55, 0.65);
+  --vaas-surface-solid: #0f1937;
+  --vaas-surface-hover: rgba(20, 35, 70, 0.7);
+  --vaas-glass-border: rgba(59, 130, 246, 0.18);
+  --vaas-text: #e2e8f0;
+  --vaas-text-dim: #94a3b8;
+  --vaas-text-bright: #f8fafc;
+  --vaas-primary: #2563eb;
+  --vaas-primary-glow: rgba(37, 99, 235, 0.35);
+  --vaas-primary-hover: #3b82f6;
+  --vaas-primary-deep: #1d4ed8;
+  --vaas-border: rgba(100, 130, 200, 0.15);
+  --vaas-success: #22c55e;
+  --vaas-success-bg: rgba(34, 197, 94, 0.08);
+  --vaas-danger: #ef4444;
+  --vaas-danger-hover: #dc2626;
+  --vaas-warning: #f59e0b;
+  --vaas-card-radius: 20px;
+  --vaas-transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ── Animated Background ── */
+.vaas-page {
+  min-height: 100vh;
+  background: linear-gradient(160deg, var(--vaas-bg-start) 0%, #0d1a3a 40%, var(--vaas-bg-end) 100%);
+  color: var(--vaas-text);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.vaas-page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 10%, rgba(37, 99, 235, 0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 500px 500px at 80% 80%, rgba(99, 102, 241, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Top Navbar ── */
+.vaas-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 64px;
+  background: rgba(6, 12, 31, 0.8);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border-bottom: 1px solid var(--vaas-glass-border);
+}
+
+.vaas-navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--vaas-text-bright);
+  letter-spacing: -0.01em;
+}
+
+.vaas-navbar-logo svg {
+  width: 28px;
+  height: 28px;
+  color: var(--vaas-primary);
+  filter: drop-shadow(0 0 6px var(--vaas-primary-glow));
+}
+
+.vaas-navbar-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--vaas-text-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.vaas-navbar-label::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--vaas-success);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.5);
+  animation: vaas-pulse-dot 2s ease-in-out infinite;
+}
+
+/* ── Container ── */
+.vaas-container {
+  position: relative;
+  z-index: 1;
+  width: min(780px, 100%);
+  margin: 0 auto;
+  padding: 36px 20px 48px;
+}
+
+/* ── Glass Card ── */
+.vaas-card {
+  background: var(--vaas-surface);
+  backdrop-filter: blur(24px) saturate(1.3);
+  -webkit-backdrop-filter: blur(24px) saturate(1.3);
+  border: 1px solid var(--vaas-glass-border);
+  border-radius: var(--vaas-card-radius);
+  box-shadow:
+    0 4px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  padding: 32px;
+  animation: vaas-card-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes vaas-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Typography ── */
+.vaas-title {
+  margin: 0 0 6px;
+  font-size: 1.65rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #f8fafc 0%, #93c5fd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vaas-subtitle {
+  margin: 0 0 24px;
+  color: var(--vaas-text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* ── Email Banner ── */
+.vaas-email-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  background: rgba(37, 99, 235, 0.08);
+  color: #93c5fd;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 22px;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.vaas-email-banner svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--vaas-primary);
+}
+
+/* ── Step Indicator ── */
+.vaas-steps {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 28px;
+}
+
+.vaas-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--vaas-text-dim);
+  opacity: 0.5;
+  transition: opacity var(--vaas-transition), color var(--vaas-transition);
+}
+
+.vaas-step.is-active {
+  color: var(--vaas-primary-hover);
+  opacity: 1;
+}
+
+.vaas-step.is-complete {
+  color: var(--vaas-success);
+  opacity: 0.8;
+}
+
+.vaas-step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 2px solid currentColor;
+  flex-shrink: 0;
+}
+
+.vaas-step.is-active .vaas-step-num {
+  background: var(--vaas-primary);
+  border-color: var(--vaas-primary);
+  color: #fff;
+  box-shadow: 0 0 12px var(--vaas-primary-glow);
+}
+
+.vaas-step.is-complete .vaas-step-num {
+  background: var(--vaas-success);
+  border-color: var(--vaas-success);
+  color: #fff;
+}
+
+.vaas-step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--vaas-border);
+  margin: 0 10px;
+  border-radius: 2px;
+  min-width: 24px;
+}
+
+.vaas-step-connector.is-done {
+  background: linear-gradient(90deg, var(--vaas-success), var(--vaas-primary));
+}
+
+/* ── Document Drop Zones ── */
+.vaas-zone-list {
+  display: grid;
+  gap: 16px;
+}
+
+.vaas-drop-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--vaas-text);
+}
+
+.vaas-dropzone {
+  border: 2px dashed rgba(100, 140, 220, 0.3);
+  border-radius: 14px;
+  min-height: 100px;
+  padding: 18px;
+  background: rgba(15, 30, 60, 0.3);
+  color: var(--vaas-text-dim);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+  transition: border-color var(--vaas-transition), background var(--vaas-transition), box-shadow var(--vaas-transition);
+}
+
+.vaas-dropzone:hover {
+  border-color: rgba(37, 99, 235, 0.45);
+  background: rgba(20, 40, 80, 0.35);
+}
+
+.vaas-dropzone.is-dragging {
+  border-color: var(--vaas-primary);
+  background: rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 20px var(--vaas-primary-glow);
+}
+
+.vaas-dropzone.has-file {
+  border-color: var(--vaas-success);
+  background: var(--vaas-success-bg);
+  border-style: solid;
+}
+
+.vaas-dropzone.has-file strong {
+  color: var(--vaas-success);
+}
+
+.vaas-dropzone-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--vaas-text-dim);
+  opacity: 0.6;
+}
+
+.vaas-dropzone.has-file .vaas-dropzone-icon {
+  color: var(--vaas-success);
+  opacity: 1;
+}
+
+.vaas-dropzone-hint {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* ── Buttons ── */
+.vaas-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 24px;
+  background: var(--vaas-primary);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background var(--vaas-transition), box-shadow var(--vaas-transition), transform 100ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.vaas-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.vaas-button:hover {
+  background: var(--vaas-primary-hover);
+  box-shadow: 0 4px 20px var(--vaas-primary-glow);
+}
+
+.vaas-button:active {
+  transform: scale(0.97);
+}
+
+.vaas-button:disabled {
+  cursor: not-allowed;
+  background: rgba(100, 116, 139, 0.3);
+  color: rgba(255,255,255,0.4);
+  box-shadow: none;
+}
+
+.vaas-button:disabled::after {
+  display: none;
+}
+
+.vaas-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.vaas-button-full {
+  width: 100%;
+}
+
+/* ── Dev / Mock Button ── */
+.vaas-mock-btn {
+  margin-top: 20px;
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  color: #a5b4fc;
+  font-size: 0.82rem;
+}
+
+.vaas-mock-btn:hover {
+  background: rgba(99, 102, 241, 0.2);
+  box-shadow: none;
+}
+
+/* ── Quiz ── */
+.vaas-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.vaas-quiz-q {
+  margin-bottom: 20px;
+}
+
+.vaas-textarea {
+  width: 100%;
+  min-height: 100px;
+  border: 1px solid rgba(100, 140, 220, 0.2);
+  border-radius: 12px;
+  padding: 12px 14px;
+  resize: vertical;
+  background: rgba(10, 20, 45, 0.5);
+  color: var(--vaas-text);
+  transition: border-color var(--vaas-transition), box-shadow var(--vaas-transition);
+}
+
+.vaas-textarea::placeholder {
+  color: var(--vaas-text-dim);
+  opacity: 0.5;
+}
+
+.vaas-textarea:focus {
+  outline: none;
+  border-color: var(--vaas-primary);
+  box-shadow: 0 0 0 3px var(--vaas-primary-glow);
+}
+
+/* ── Timer ── */
+.vaas-timer {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  background: rgba(37, 99, 235, 0.08);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #93c5fd;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.vaas-timer svg {
+  width: 16px;
+  height: 16px;
+  color: var(--vaas-primary);
+}
+
+.vaas-timer.is-low {
+  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.08);
+  color: #fca5a5;
+  animation: vaas-timer-pulse 1s ease-in-out infinite;
+}
+
+.vaas-timer.is-low svg {
+  color: var(--vaas-danger);
+}
+
+@keyframes vaas-timer-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* ── Video Interview ── */
+.vaas-video-wrap {
+  position: relative;
+  width: 100%;
+  margin: 0 auto 20px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #050a18;
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--vaas-glass-border);
+}
+
+/* Framing corners */
+.vaas-video-wrap::before,
+.vaas-video-wrap::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.vaas-video-wrap::before {
+  top: 14px;
+  left: 14px;
+  border-top: 2px solid rgba(37, 99, 235, 0.6);
+  border-left: 2px solid rgba(37, 99, 235, 0.6);
+  border-top-left-radius: 4px;
+}
+
+.vaas-video-wrap::after {
+  bottom: 14px;
+  right: 14px;
+  border-bottom: 2px solid rgba(37, 99, 235, 0.6);
+  border-right: 2px solid rgba(37, 99, 235, 0.6);
+  border-bottom-right-radius: 4px;
+}
+
+.vaas-video-corners-extra::before,
+.vaas-video-corners-extra::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.vaas-video-corners-extra::before {
+  top: 14px;
+  right: 14px;
+  border-top: 2px solid rgba(37, 99, 235, 0.6);
+  border-right: 2px solid rgba(37, 99, 235, 0.6);
+  border-top-right-radius: 4px;
+}
+
+.vaas-video-corners-extra::after {
+  bottom: 14px;
+  left: 14px;
+  border-bottom: 2px solid rgba(37, 99, 235, 0.6);
+  border-left: 2px solid rgba(37, 99, 235, 0.6);
+  border-bottom-left-radius: 4px;
+}
+
+.vaas-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.vaas-video-fallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: #475569;
+  padding: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+/* LIVE badge */
+.vaas-live-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fca5a5;
+}
+
+.vaas-live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--vaas-success);
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+  animation: vaas-pulse-dot 1.5s ease-in-out infinite;
+}
+
+@keyframes vaas-pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.7);
+  }
+}
+
+.vaas-tracking-dot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--vaas-primary);
+  box-shadow: 0 0 0 5px var(--vaas-primary-glow);
+  pointer-events: none;
+  transition: top 0.8s ease-in-out, left 0.8s ease-in-out;
+}
+
+/* ── AI Question Prompt Card ── */
+.vaas-ai-prompt {
+  background: var(--vaas-surface);
+  border: 1px solid var(--vaas-glass-border);
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.vaas-ai-prompt-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.12);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.vaas-ai-prompt-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--vaas-primary);
+}
+
+.vaas-ai-prompt-text {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--vaas-text);
+}
+
+.vaas-ai-prompt-sub {
+  font-size: 0.78rem;
+  color: var(--vaas-text-dim);
+  margin-top: 2px;
+}
+
+/* ── Audio Waveform ── */
+.vaas-waveform {
+  margin: 0 0 20px;
+  background: var(--vaas-surface);
+  border: 1px solid var(--vaas-glass-border);
+  border-radius: 14px;
+  padding: 18px 14px;
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  align-items: center;
+  min-height: 72px;
+}
+
+.vaas-wave-bar {
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--vaas-primary) 0%, #7c3aed 100%);
+  animation: vaas-wave 1.2s ease-in-out infinite;
+  will-change: height;
+}
+
+@keyframes vaas-wave {
+  0%, 100% {
+    height: 10px;
+    opacity: 0.35;
+  }
+  50% {
+    height: 44px;
+    opacity: 1;
+  }
+}
+
+/* ── End / Danger Button ── */
+.vaas-end-btn {
+  background: var(--vaas-danger);
+}
+
+.vaas-end-btn:hover {
+  background: var(--vaas-danger-hover);
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.3);
+}
+
+.vaas-end-btn::after {
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+}
+
+/* ── Status / Completion Icons ── */
+.vaas-status-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 24px;
+  background: rgba(37, 99, 235, 0.1);
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  display: grid;
+  place-items: center;
+  margin: 0 auto 20px;
+  animation: vaas-icon-float 3s ease-in-out infinite;
+}
+
+.vaas-status-icon-wrap svg {
+  width: 38px;
+  height: 38px;
+  color: var(--vaas-primary);
+}
+
+.vaas-status-icon-wrap.is-success {
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.vaas-status-icon-wrap.is-success svg {
+  color: var(--vaas-success);
+}
+
+@keyframes vaas-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* ── Waiting Spinner ── */
+.vaas-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(37, 99, 235, 0.15);
+  border-top-color: var(--vaas-primary);
+  border-radius: 50%;
+  animation: vaas-spin 0.9s linear infinite;
+  margin: 0 auto 18px;
+}
+
+@keyframes vaas-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Center text util ── */
+.vaas-text-center {
+  text-align: center;
+}
+
+/* ── Info row ── */
+.vaas-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(37, 99, 235, 0.06);
+  border: 1px solid rgba(37, 99, 235, 0.12);
+  border-radius: 10px;
+  margin-bottom: 16px;
+  font-size: 0.82rem;
+  color: var(--vaas-text-dim);
+}
+
+.vaas-info-row svg {
+  width: 16px;
+  height: 16px;
+  color: var(--vaas-primary);
+  flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .vaas-navbar {
+    padding: 0 16px;
+  }
+
+  .vaas-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+
+  .vaas-container {
+    padding: 24px 14px 36px;
+  }
+
+  .vaas-title {
+    font-size: 1.35rem;
+  }
+
+  .vaas-step span:not(.vaas-step-num) {
+    display: none;
+  }
+}
+
+/* ── Network Error Toast ── */
+.vaas-network-toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  animation: vaas-toast-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes vaas-toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.vaas-network-toast-inner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(127, 29, 29, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  border-radius: 14px;
+  padding: 14px 20px;
+  color: #fecaca;
+  font-size: 0.88rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  max-width: 520px;
+}
+
+.vaas-network-toast-inner svg {
+  width: 22px;
+  height: 22px;
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+.vaas-network-toast-inner strong {
+  display: block;
+  color: #fca5a5;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.vaas-network-toast-inner span {
+  display: block;
+  color: #fecaca;
+  opacity: 0.85;
+  font-size: 0.82rem;
+}
+
+.vaas-network-toast-close {
+  background: none;
+  border: none;
+  color: #fca5a5;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+  opacity: 0.7;
+  transition: opacity 150ms ease;
+  flex-shrink: 0;
+}
+
+.vaas-network-toast-close:hover {
+  opacity: 1;
+}

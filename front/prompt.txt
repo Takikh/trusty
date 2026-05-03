@@ -1,0 +1,45 @@
+prompt
+:
+we fixed to the third one of authentificating doctors 
+
+How we are going to do it is :
+
+It's a Service as a Software (SaS) if i'm right,
+
+and it's going to work like this 
+
+the service is authentificating the user if he is telling the TRUTH or NOT about being a DOCTOR (could change to be generelised to every job)
+
+to do this , we thought about two/three platforms that do something similar
+
+the first one is gmail , that provides identification to its users and can be integrated into other apps 
+
+the other is OAuth that uses google (gmail) as one of its auth providers
+
+the other one is Persona which has the biggest similarities with our project (it verifies id and face etc)
+
+now to make this we want to make it decentralized and needs an api key / token to be created and payed for in our platform so they get the key to be able to access our verification power 
+
+that aside , the platform works this way:
+
+We receive auth request from the client platform that wants to verify its client(the doctor supposedly)
+
+after that , he is prompted to upload his diplome and proof of identification and every useful info that can be used 
+
+Then , the agents will scrape the web to verify the data that he provided and also at the same time generate the questions that will be asked of the "doctor" , it has to phases , the written quiz phase , and the interview with the agent through a text to speech , speech to text model to communicate with them 
+
+after asking questions and making sure that the candidate didn't cheat 
+
+Example : by using a Nvidia gpu feature that makes the eye stay on the camera , which how we fixed is with using a random point generator and an eye tracker to confirm that his eyes are loooking where we want him to look during the interview 
+
+After it's done , we send a request back to the client's backend to update the status of the "doctor" , if it's true or not , if not , the account should be flagged or something to not be able to take it , and the time increases until he is banned BY FACE ID , so if we see the same face , he can't take the test 
+
+Ask me EVERY question you can about this project 
+
+generate a structured text about everything i said 
+
+Ask me first then after i answer generate the text so it's a comprehensive project structure 
+
+After that (my task is front end) i will try to make a mock up in figma with another ai so generate me a prompt for it AFTER i answer and you generate the text with everything i said  
+
+

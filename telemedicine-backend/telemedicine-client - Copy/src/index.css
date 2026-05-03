@@ -1,0 +1,198 @@
+#root {
+  min-height: 100vh;
+}
+
+/* ── Alerts ────────────────────────────────────────────────────────── */
+
+.tele-alert {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.tele-alert-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.tele-alert-success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+.tele-alert-info {
+  background: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+/* ── Footer links ──────────────────────────────────────────────────── */
+
+.tele-footer-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.tele-footer-link a {
+  color: #4361ee;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.tele-footer-link a:hover {
+  text-decoration: underline;
+}
+
+/* ── Badges ─────────────────────────────────────────────────────────── */
+
+.tele-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.tele-badge-neutral {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+/* ── Table (Admin dashboard) ────────────────────────────────────────── */
+
+.tele-table-wrap {
+  overflow-x: auto;
+  padding: 0 24px 24px;
+}
+
+.tele-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.tele-table th {
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  text-align: left;
+  padding: 14px 16px;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.tele-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+}
+
+.tele-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.tele-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tele-cell-name {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* ── Action buttons (admin) ─────────────────────────────────────────── */
+
+.tele-action-btn {
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tele-action-approve {
+  background: #4361ee;
+  color: white;
+}
+
+.tele-action-approve:hover {
+  background: #3651d4;
+  box-shadow: 0 2px 8px rgba(67, 97, 238, 0.3);
+}
+
+.tele-action-revoke {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.tele-action-revoke:hover {
+  background: #fecaca;
+}
+
+/* ── Loading & empty states ─────────────────────────────────────────── */
+
+.tele-loading {
+  text-align: center;
+  padding: 48px 24px;
+  color: #64748b;
+  font-size: 15px;
+}
+
+.tele-empty-state {
+  text-align: center;
+  padding: 64px 24px;
+  color: #94a3b8;
+  font-size: 15px;
+}
+
+/* ── Banner subtitle ────────────────────────────────────────────────── */
+
+.tele-banner-sub {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* ── Logout button styling ──────────────────────────────────────────── */
+
+.tele-logout-btn {
+  margin-top: auto;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  color: inherit;
+  opacity: 0.7;
+}
+
+.tele-logout-btn:hover {
+  opacity: 1;
+}
+
+/* ── Sidebar active state ───────────────────────────────────────────── */
+
+.tele-nav-item.active {
+  font-weight: 600;
+  opacity: 1;
+}

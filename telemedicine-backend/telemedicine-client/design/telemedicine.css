@@ -1,0 +1,188 @@
+:root {
+  --tele-bg: #ecf8f6;
+  --tele-surface: #ffffff;
+  --tele-text: #0f172a;
+  --tele-subtle-text: #475569;
+  --tele-primary: #0f766e;
+  --tele-primary-hover: #0d9488;
+  --tele-border: #cbd5e1;
+  --tele-sidebar: #e2f4f1;
+  --tele-success: #16a34a;
+}
+
+.tele-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--tele-bg) 0%, #f8fcfb 100%);
+  color: var(--tele-text);
+}
+
+.tele-container {
+  width: min(960px, 100%);
+  margin: 0 auto;
+  padding: 32px 20px;
+}
+
+.tele-card {
+  background: var(--tele-surface);
+  border: 1px solid var(--tele-border);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  padding: 28px;
+}
+
+.tele-auth-wrap {
+  width: min(560px, 100%);
+  margin: 36px auto 0;
+}
+
+.tele-title {
+  margin: 0 0 8px;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.tele-subtitle {
+  margin: 0 0 22px;
+  color: var(--tele-subtle-text);
+}
+
+.tele-form-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.tele-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.tele-input {
+  margin-top: 6px;
+  width: 100%;
+  border: 1px solid var(--tele-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+  background: #fff;
+}
+
+.tele-input:focus,
+.tele-otp input:focus {
+  border-color: #14b8a6;
+  box-shadow: 0 0 0 3px rgba(20, 184, 166, 0.2);
+}
+
+.tele-button {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 16px;
+  background: var(--tele-primary);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.tele-button:hover {
+  background: var(--tele-primary-hover);
+}
+
+.tele-otp {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 18px 0 22px;
+}
+
+.tele-otp input {
+  width: 44px;
+  height: 52px;
+  border: 1px solid var(--tele-border);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.tele-handoff-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.tele-dashboard {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.tele-sidebar {
+  background: var(--tele-sidebar);
+  border-right: 1px solid var(--tele-border);
+  padding: 24px 16px;
+}
+
+.tele-sidebar h2 {
+  margin: 0 0 20px;
+  font-size: 1.1rem;
+}
+
+.tele-nav-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #0f172a;
+  text-decoration: none;
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.tele-main {
+  padding: 28px 24px;
+  background: #f8fafc;
+}
+
+.tele-banner {
+  border: 1px solid #99f6e4;
+  background: #ccfbf1;
+  border-radius: 12px;
+  padding: 18px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.tele-status-card {
+  background: #fff;
+  border: 1px solid var(--tele-border);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.tele-check {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: var(--tele-success);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.tele-muted {
+  color: var(--tele-subtle-text);
+}
+
+@media (max-width: 860px) {
+  .tele-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .tele-sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--tele-border);
+  }
+}

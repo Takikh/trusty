@@ -1,0 +1,9 @@
+@echo off
+cd /d "%~dp0"
+echo Opening expression monitor in a separate CMD window...
+start "Hackathon Expression Monitor" cmd /k "cd /d %~dp0 && python tools\expression_monitor.py"
+echo Waiting 5 seconds for webcam monitor startup...
+timeout /t 5 /nobreak
+echo Running GOOD doctor pipeline in this CMD window...
+python main.py --doctor demo\good_doctor --external-expression
+pause

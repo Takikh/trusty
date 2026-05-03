@@ -1,0 +1,336 @@
+{
+  "info": {
+    "name": "Clinical Identity Verification API",
+    "description": "Full API collection for the telemedicine backend.\n\n**Testing order:**\n1. Health Check\n2. Register Doctor\n3. Verify Email (use OTP from email)\n4. Login Doctor (will 403 until admin approves)\n5. Login Admin\n6. Get All Doctors (admin)\n7. Approve Doctor (admin)\n8. Login Doctor (now succeeds)\n9. Get My Profile",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api"
+    },
+    {
+      "key": "admin_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_token",
+      "value": ""
+    },
+    {
+      "key": "doctor_user_id",
+      "value": ""
+    },
+    {
+      "key": "test_email",
+      "value": "testdoctor@example.com"
+    }
+  ],
+  "item": [
+    {
+      "name": "1 — Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        },
+        "description": "Verify the server is running."
+      }
+    },
+    {
+      "name": "2 — Register Doctor",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 201', () => pm.response.to.have.status(201));",
+              "pm.test('Message received', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.message).to.include('Verification code');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"email\": \"{{test_email}}\",\n  \"password\": \"securepassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/register",
+          "host": ["{{base_url}}"],
+          "path": ["auth", "register"]
+        },
+        "description": "Step 1: Create a doctor account. A 6-digit OTP will be sent to the email."
+      }
+    },
+    {
+      "name": "3 — Verify Email (OTP)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Email verified', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.message).to.include('verified');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{test_email}}\",\n  \"code\": \"REPLACE_WITH_OTP_FROM_EMAIL\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/verify-email",
+          "host": ["{{base_url}}"],
+          "path": ["auth", "verify-email"]
+        },
+        "description": "Step 2: Submit the 6-digit code from the email. Replace REPLACE_WITH_OTP_FROM_EMAIL with the actual code."
+      }
+    },
+    {
+      "name": "4 — Login Doctor (before approval → 403)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 403', () => pm.response.to.have.status(403));",
+              "pm.test('Pending approval message', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.detail).to.include('pending');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{test_email}}\",\n  \"password\": \"securepassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": ["{{base_url}}"],
+          "path": ["auth", "login"]
+        },
+        "description": "Should return 403 'Account pending administrative approval' because admin hasn't approved yet."
+      }
+    },
+    {
+      "name": "5 — Login Admin",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.collectionVariables.set('admin_token', body.access_token);",
+              "pm.test('Got admin token', () => {",
+              "  pm.expect(body.access_token).to.be.a('string');",
+              "  pm.expect(body.user.role).to.equal('admin');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"admin@gmail.com\",\n  \"password\": \"admin@123456\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": ["{{base_url}}"],
+          "path": ["auth", "login"]
+        },
+        "description": "Login as admin. The token is auto-saved to {{admin_token}} for subsequent requests."
+      }
+    },
+    {
+      "name": "6 — Get All Doctors (Admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.test('Returns array', () => pm.expect(body).to.be.an('array'));",
+              "if (body.length > 0) {",
+              "  pm.collectionVariables.set('doctor_user_id', body[0].id);",
+              "}"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/admin/doctors",
+          "host": ["{{base_url}}"],
+          "path": ["admin", "doctors"]
+        },
+        "description": "Fetch all registered doctors. Auto-saves the first doctor's ID to {{doctor_user_id}}."
+      }
+    },
+    {
+      "name": "7 — Approve Doctor (Admin)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Doctor approved', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.admin_approved).to.equal(true);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"admin_approved\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/admin/doctors/{{doctor_user_id}}/approval",
+          "host": ["{{base_url}}"],
+          "path": ["admin", "doctors", "{{doctor_user_id}}", "approval"]
+        },
+        "description": "Admin approves the doctor. Uses the ID saved from step 6."
+      }
+    },
+    {
+      "name": "8 — Login Doctor (after approval → 200)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "const body = pm.response.json();",
+              "pm.collectionVariables.set('doctor_token', body.access_token);",
+              "pm.test('Got doctor token', () => {",
+              "  pm.expect(body.access_token).to.be.a('string');",
+              "  pm.expect(body.user.role).to.equal('doctor');",
+              "  pm.expect(body.user.admin_approved).to.equal(true);",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"{{test_email}}\",\n  \"password\": \"securepassword123\"\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/auth/login",
+          "host": ["{{base_url}}"],
+          "path": ["auth", "login"]
+        },
+        "description": "Should now return 200 with a JWT since admin approved the doctor."
+      }
+    },
+    {
+      "name": "9 — Get My Profile (Doctor)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', () => pm.response.to.have.status(200));",
+              "pm.test('Returns current user', () => {",
+              "  const body = pm.response.json();",
+              "  pm.expect(body.email).to.equal(pm.collectionVariables.get('test_email'));",
+              "  pm.expect(body.role).to.equal('doctor');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{doctor_token}}" }
+        ],
+        "url": {
+          "raw": "{{base_url}}/auth/me",
+          "host": ["{{base_url}}"],
+          "path": ["auth", "me"]
+        },
+        "description": "Verify the doctor's JWT works and returns their profile."
+      }
+    },
+    {
+      "name": "10 — Revoke Doctor (Admin)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" },
+          { "key": "Authorization", "value": "Bearer {{admin_token}}" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"admin_approved\": false\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/admin/doctors/{{doctor_user_id}}/approval",
+          "host": ["{{base_url}}"],
+          "path": ["admin", "doctors", "{{doctor_user_id}}", "approval"]
+        },
+        "description": "Optional: Revoke a doctor's approval. Their next login attempt will return 403."
+      }
+    }
+  ]
+}

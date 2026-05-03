@@ -1,0 +1,32 @@
+# Django & API
+Django>=5.0,<6
+djangorestframework>=3.15
+
+# Real-time
+channels>=4.0
+channels-redis>=4.2
+daphne>=4.0
+
+# Async tasks
+celery>=5.3
+redis>=5.0
+
+# Database
+psycopg2-binary>=2.9
+
+# AI / ML pipeline (from ia/requirements.txt)
+pymupdf
+pillow
+openai
+chromadb
+sentence-transformers
+faster-whisper
+sounddevice
+numpy
+kokoro-onnx
+soundfile
+deepface
+tf-keras
+opencv-python
+python-dotenv
+fpdf2

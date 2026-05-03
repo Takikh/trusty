@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "a7c3e9b2-4f1d-4c8a-9e6b-vaas-e2e-001",
+		"name": "VaaS Platform — End-to-End",
+		"description": "Test flow for the Verification-as-a-Service Django API.\n\n**Collection variables:** `base_url`, `api_key`, `session_uuid` (set automatically after **Phase 1 - Document Upload**). Optionally set `doctor_id` yourself, or let the upload pre-request script generate it.\n\n**API key:** Create a `core.ClientAPIKey` for your user (e.g. via Django admin or shell) and paste the raw secret into `api_key`.\n\n**PDF:** For upload, select a local PDF in the **file** form field (replace the placeholder path or use Postman’s file picker).",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000"
+		},
+		{
+			"key": "api_key",
+			"value": ""
+		},
+		{
+			"key": "session_uuid",
+			"value": ""
+		},
+		{
+			"key": "doctor_id",
+			"value": ""
+		}
+	],
+	"item": [
+		{
+			"name": "Authentication Check",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/health/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"health"
+					]
+				},
+				"description": "Validates `X-Api-Key` against `core.ClientAPIKey`. Expects 200 and `authenticated_user` when the key is valid."
+			},
+			"response": []
+		},
+		{
+			"name": "Phase 1 - Document Upload",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// Simulate a doctor_id for this request (form-data field {{doctor_id}}).",
+							"const simulated = 'postman-doc-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);",
+							"pm.collectionVariables.set('doctor_id', simulated);"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test('Status is 201 Created', function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"const json = pm.response.json();",
+							"pm.test('Response has session_uuid', function () {",
+							"    pm.expect(json).to.have.property('session_uuid');",
+							"    pm.expect(json.session_uuid).to.be.a('string').and.not.empty;",
+							"});",
+							"",
+							"if (json && json.session_uuid) {",
+							"    pm.collectionVariables.set('session_uuid', json.session_uuid);",
+							"    console.log('Saved session_uuid to collection:', json.session_uuid);",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "doctor_id",
+							"value": "{{doctor_id}}",
+							"type": "text",
+							"description": "Populated by pre-request script; override via collection variable if needed."
+						},
+						{
+							"key": "file",
+							"description": "Select a PDF in Postman (replace placeholder path).",
+							"type": "file",
+							"src": "/path/to/your/doctor_document.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/verification/upload/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"verification",
+						"upload"
+					]
+				},
+				"description": "Multipart upload: `doctor_id` + `file` (PDF). Creates a `VerificationJob` and returns `session_uuid` (job primary key). Tests persist `session_uuid` for **Decision Status**."
+			},
+			"response": []
+		},
+		{
+			"name": "Phase 4 - Interview Session Setup",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"if (!pm.collectionVariables.get('doctor_id')) {",
+							"    pm.collectionVariables.set('doctor_id', 'postman-interview-' + Date.now());",
+							"}"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"doctor_id\": \"{{doctor_id}}\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/api/v1/interviews/sessions/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"interviews",
+						"sessions"
+					]
+				},
+				"description": "Creates an `InterviewSession` row. Use returned `session_uuid` for WebSocket `ws://.../ws/interview/<uuid>/`. Reuses `doctor_id` from the upload pre-request when you run the folder in order."
+			},
+			"response": []
+		},
+		{
+			"name": "Decision Status",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "X-Api-Key",
+						"value": "{{api_key}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_url}}/api/v1/verification/jobs/{{session_uuid}}/decision/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"verification",
+						"jobs",
+						"{{session_uuid}}",
+						"decision"
+					]
+				},
+				"description": "Reads `VerificationJob` for the UUID saved from Phase 1 upload. `decision` is `pending` until your Celery/AI pipeline sets `result.decision` or completes with `status=succeeded` (see `VerificationDecisionView`)."
+			},
+			"response": []
+		}
+	]
+}

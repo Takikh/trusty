@@ -1,0 +1,1 @@
+"""VaaS Django configuration package."""

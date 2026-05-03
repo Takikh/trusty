@@ -1,0 +1,13 @@
+pymupdf
+pillow
+openai
+chromadb
+sentence-transformers
+faster-whisper
+sounddevice
+numpy
+kokoro-onnx
+soundfile
+opencv-python
+python-dotenv
+fpdf2

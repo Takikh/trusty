@@ -1,0 +1,23 @@
+# FastAPI & Server
+fastapi>=0.115.0
+uvicorn[standard]>=0.34.0
+
+# Supabase REST client (postgrest-py — lightweight, no build issues)
+postgrest>=0.16.0
+
+# HTTP client (required by postgrest)
+httpx>=0.28.0
+
+# Validation & Settings
+pydantic>=2.11.0
+pydantic-settings>=2.9.0
+
+# Auth
+python-jose[cryptography]>=3.3.0
+bcrypt>=4.0.0
+
+# Environment
+python-dotenv>=1.0.0
+
+# Form parsing (needed by FastAPI for OAuth2 forms)
+python-multipart>=0.0.18

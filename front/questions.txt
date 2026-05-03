@@ -1,0 +1,39 @@
+Q: What exactly do you mean by "decentralized"? Are you talking about blockchain/Web3 (where identity tokens are stored on a ledger), or do you simply mean a decoupled microservice architecture (e.g., using Spring Boot or Node.js to build a standalone API that any client can plug into)?
+
+A: No i meant a decoupled micro service
+
+Q: How are you handling the callback? When the 15-minute interview is done, how does your system securely ping the client's backend (webhooks?) to say, "Update User 123 to VERIFIED"?
+
+A: With a PUT request to the ID 
+
+Q:Where are the agents scraping? Medical data isn't always sitting on public Google searches. Are you targeting specific public registries (like the Algerian Ministry of Health database, or LinkedIn)?
+
+A: Yes 
+
+Q: How are questions generated? Are you planning to use a RAG pipeline (perhaps with a local LLM like Llama 3 and a vector database) to ingest the uploaded diploma/scraped data and generate highly specific, un-Googleable medical questions?
+
+A: okey so for the first three qustion which are in the survey before the interview will be created by turning the documents into texts and genrating three qustions for him to answer but for the interview it will be using all the data of the workflow turned to chunks then embededd then stored to chroma db which we gonna use it as a rag
+
+Q: How will the random-point eye tracker work in practice? Beating Nvidia Broadcast's fake eye contact is a brilliant catch! But how will it look on the frontend? Will a dot appear on the React screen that the doctor must look at while answering, or between questions?
+
+A: Yes while answering but we could do either or , it would look like a green dot or something
+
+Q: What about latency? TTS (Text-to-Speech) and STT (Speech-to-Text) can have delays. How will you ensure the interview feels like a natural conversation so the doctor doesn't get frustrated by lag?
+
+A: no it wont have a delay both models are light weighted, whisper and korako 80 million parameter 
+
+Q: What happens if they fail the written quiz? Do they even make it to the video interview, or is the process terminated immediately to save compute resources?
+
+A: No they don't they get failed immediately 
+
+Q: How are you handling Face ID storage? If you ban a face, you have to store a biometric hash of it. How are you ensuring this complies with data protection laws (like Algeria's Law 18-07) so you aren't liable for a massive biometric data breach?
+
+A: We will create a EULA probably 
+
+Q: What about false negatives? What if a real doctor is just really nervous, has a bad webcam, or the AI misunderstands their accent? Is there a human-in-the-loop fallback, or is the AI's decision final?
+
+A: Yes after some number of tries the and still failing the client is flagged as a potential or something like that
+
+Q: Is this a white-label solution or a redirect? When the doctor clicks "Verify Identity" on the client's website, does a modal pop up over the client's site, or are they redirected to a completely different domain (e.g., verify.yourstartup.com), like how an OAuth Google login works?
+
+A: Yes a completely different page to verify then is redirected back to the normal client page

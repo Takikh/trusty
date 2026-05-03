@@ -1,0 +1,29 @@
+{
+  "doctor_id": "fake_001",
+  "declared_name": "Dr. Karim Mansouri",
+  "declared_specialty": "Cardiology",
+  "declared_institution": "Université de Constantine — Faculté de Médecine",
+  "declared_employer": "Clinique El Azhar",
+  "years_experience": 10,
+  "document_paths": [
+    "demo/fake_doctor/documents/diploma.pdf",
+    "demo/fake_doctor/documents/license.pdf"
+  ],
+  "survey_qa": [
+    {
+      "id": "sq1",
+      "question": "Describe your main area of expertise within Cardiology and what you focus on most in your daily practice.",
+      "answer": "I work in cardiology doing heart procedures. I see many patients every day with heart problems and treat them. I am very experienced in all areas of cardiology including stents and medications."
+    },
+    {
+      "id": "sq2",
+      "question": "During your time at Clinique El Azhar, what was a challenging case that shaped your approach to patient care?",
+      "answer": "I had a patient once with a heart attack and we treated him and he got better. It was very difficult but we managed. I learned to always be careful with heart patients."
+    },
+    {
+      "id": "sq3",
+      "question": "How would you describe your clinical methodology when a patient presents with a complex cardiac condition?",
+      "answer": "I check the patient and do tests. Then I decide what treatment to give. I use my 10 years of experience to know what to do in difficult situations."
+    }
+  ]
+}
